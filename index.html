@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Celebration</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        animation: changeBackgroundColor 10s infinite alternate;
+    }
+    @keyframes changeBackgroundColor {
+        0% { background-color: #ff0066; }
+        25% { background-color: #00ff66; }
+        50% { background-color: #6600ff; }
+        75% { background-color: #ffff66; }
+        100% { background-color: #ff0066; }
+    }
+    .container {
+        position: relative;
+    }
+    .gift-box {
+        width: 200px;
+        height: 200px;
+        background-color: #e0b5ff;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+    .gift-box:hover {
+        transform: scale(1.1);
+    }
+    .wishes {
+        text-align: center;
+        display: none;
+        animation: colorChange 5s infinite alternate;
+    }
+    .gift-box.clicked .wishes {
+        display: block;
+    }
+    @keyframes colorChange {
+        0% { color: red; }
+        25% { color: blue; }
+        50% { color: green; }
+        75% { color: purple; }
+        100% { color: orange; }
+    }
+    .stickers {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        z-index: 10;
+    }
+    .gift-box.clicked .stickers {
+        display: block;
+        animation: stickerAnimation 5s forwards;
+    }
+    @keyframes stickerAnimation {
+        0% { transform: translateY(-100%); opacity: 0; }
+        50% { transform: translateY(50%); opacity: 1; }
+        100% { transform: translateY(100%); opacity: 0; }
+    }
+    .rain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background-image: radial-gradient(circle, #ff0000, #00ff00, #0000ff);
+        background-size: 10px 10px;
+        animation: falling-flowers 10s linear infinite;
+    }
+    @keyframes falling-flowers {
+        0% { background-position: 0 0; }
+        100% { background-position: 100% 100%; }
+    }
+</style>
+</head>
+<body>
+
+<audio id="loveSong" preload="auto">
+    <source src="love_song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<div class="container">
+    <div class="gift-box" onclick="openGift()">
+        <div class="wishes">
+            <h2>I Love U, Awaako!</h2>
+            <p id="loveWish">Wishing you a day filled with love, joy, and happiness!</p>
+        </div>
+        <div class="stickers">
+            <div style="position: absolute; top: 10%; left: 40%; font-size: 24px;">💖</div>
+            <div style="position: absolute; top: 20%; left: 60%; font-size: 24px;">♥️</div>
+            <div style="position: absolute; top: 30%; left: 80%; font-size: 24px;">💕</div>
+            <div style="position: absolute; top: 40%; left: 20%; font-size: 24px;">💖</div>
+            <div style="position: absolute; top: 50%; left: 50%; font-size: 24px;">💝</div>
+            <div style="position: absolute; top: 60%; left: 70%; font-size: 24px;">💝</div>
+            <div style="position: absolute; top: 70%; left: 30%; font-size: 24px;">💞</div>
+            <!-- Add more stickers as needed -->
+        </div>
+    </div>
+    <div class="rain"></div>
+</div>
+
+<script>
+function openGift() {
+    var giftBox = document.querySelector('.gift-box');
+    giftBox.classList.add('clicked');
+    
+    // Generate random love wishes
+    var loveWishes = [
+        "Wishing you endless love and happiness!",
+        "You are my sunshine, my love, my life!",
+        "May our love grow stronger with each passing day!",
+        "You make every moment magical!",
+        "Here's to a lifetime of love and laughter!"
+    ];
+    var randomIndex = Math.floor(Math.random() * loveWishes.length);
+    document.getElementById('loveWish').innerText = loveWishes[randomIndex];
+
+    // Play love song
+    document.getElementById('loveSong').play();
+}
+
+window.onload = function() {
+    var wishes = document.querySelectorAll('.wishes p');
+    wishes.forEach(function(wish) {
+        var colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+        var currentIndex = Math.floor(Math.random() * colors.length);
+        var interval = setInterval(function() {
+            currentIndex = (currentIndex + 1) % colors.length;
+            wish.style.color = colors[currentIndex];
+        }, 500);
+    });
+};
+</script>
+
+</body>
+</html>
